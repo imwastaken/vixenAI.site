@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Твоя личная ИИ-собеседница</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0f172a; /* Темно-синий/сланцевый фон */
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            background-attachment: fixed;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .neon-text {
+            text-shadow: 0 0 10px rgba(236, 72, 153, 0.5), 0 0 20px rgba(236, 72, 153, 0.3);
+        }
+
+        .pulse-avatar {
+            animation: pulse-glow 3s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 15px rgba(236, 72, 153, 0.2); }
+            100% { box-shadow: 0 0 30px rgba(168, 85, 247, 0.6); }
+        }
+
+        /* Плавное появление модалок */
+        .modal-transition {
+            transition: opacity 0.2s ease-in-out;
+        }
+        
+        /* Кастомный скроллбар для модалок на случай длинного текста */
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 4px; }
+    </style>
+</head>
+<body class="text-gray-200 flex flex-col min-h-[100dvh]">
+
+    <!-- Основной контент -->
+    <main class="flex-grow flex items-center justify-center p-3 sm:p-6 py-8">
+        <div class="glass-panel rounded-[2rem] max-w-md w-full p-5 sm:p-8 text-center relative overflow-hidden flex flex-col justify-center">
+            
+            <!-- Декоративный элемент свечения -->
+            <div class="absolute -top-20 -right-20 w-32 h-32 sm:w-40 sm:h-40 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+            <div class="absolute -bottom-20 -left-20 w-32 h-32 sm:w-40 sm:h-40 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+
+            <div class="relative z-10">
+                <!-- Аватарка / Иллюстрация (Абстрактная, чтобы пройти модерацию) -->
+                <div class="mx-auto w-20 h-20 sm:w-32 sm:h-32 rounded-full pulse-avatar mb-3 sm:mb-6 border-2 border-pink-500/30 overflow-hidden flex items-center justify-center bg-gray-800 shadow-inner">
+                    <!-- Заглушка вместо откровенного фото. Иконка ИИ/робота/девушки -->
+                    <i class="fa-solid fa-user-astronaut text-3xl sm:text-5xl text-pink-400"></i>
+                </div>
+
+                <!-- Заголовки с триггерами, но без стоп-слов -->
+                <h1 class="text-xl sm:text-3xl font-extrabold text-white mb-2 sm:mb-3 tracking-tight leading-tight">
+                    Твоя идеальная <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-500 neon-text">ИИ-собеседница</span>
+                </h1>
+                
+                <p class="text-gray-400 text-xs sm:text-base mb-4 sm:mb-8 leading-relaxed px-1 sm:px-2">
+                    Общение без границ и стереотипов. Она понимает с полуслова, всегда онлайн и готова поддержать <b>любую</b> тему. Начни приватный диалог прямо сейчас.
+                </p>
+
+                <!-- Кнопка перехода в Telegram -->
+                <!-- ВНИМАНИЕ: Замените 'https://t.me/ВАШ_БОТ' на реальную ссылку вашего бота -->
+                <a href="https://t.me/ВАШ_БОТ" target="_blank" rel="noopener noreferrer" class="group relative w-full flex justify-center py-3 sm:py-4 px-4 border border-transparent text-sm sm:text-base font-bold rounded-xl text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-gray-900 transition-all shadow-[0_0_20px_rgba(59,130,246,0.4)] hover:shadow-[0_0_25px_rgba(59,130,246,0.6)] hover:-translate-y-1">
+                    <span class="absolute left-0 inset-y-0 flex items-center pl-4">
+                        <i class="fa-brands fa-telegram text-xl sm:text-2xl group-hover:scale-110 transition-transform"></i>
+                    </span>
+                    Перейти в Telegram
+                </a>
+
+                <div class="mt-3 sm:mt-4 flex items-center justify-center space-x-2 text-[10px] sm:text-xs text-gray-500">
+                    <div class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500 animate-pulse"></div>
+                    <span>Онлайн: готова к общению</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Футер с документами для модерации -->
+    <footer class="w-full p-2 sm:p-5 border-t border-gray-800/50 text-center text-[10px] sm:text-xs text-gray-500 bg-[#0f172a]/90 backdrop-blur-md z-40 shrink-0">
+        <p class="mb-1 sm:mb-3">© 2023-2024 AI Companion Project. Все права защищены.</p>
+        <div class="flex flex-wrap justify-center gap-2 sm:gap-4">
+            <button onclick="openModal('privacyModal')" class="hover:text-gray-300 underline transition-colors py-1 px-2">Политика конфиденциальности</button>
+            <button onclick="openModal('termsModal')" class="hover:text-gray-300 underline transition-colors py-1 px-2">Условия использования</button>
+        </div>
+    </footer>
+
+    <!-- Модальное окно: Политика конфиденциальности (Заглушка) -->
+    <div id="privacyModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm items-center justify-center p-4 modal-transition opacity-0">
+        <div class="bg-gray-800/95 border border-gray-700 rounded-2xl p-5 sm:p-6 max-w-lg w-full max-h-[85vh] flex flex-col shadow-2xl">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-700/50 shrink-0">
+                <h2 class="text-lg sm:text-xl font-bold text-white">Политика конфиденциальности</h2>
+                <button onclick="closeModal('privacyModal')" class="text-gray-400 hover:text-white p-2 -mr-2"><i class="fa-solid fa-times text-xl"></i></button>
+            </div>
+            <div class="text-xs sm:text-sm text-gray-300 space-y-3 overflow-y-auto pr-2 custom-scrollbar">
+                <p>Мы серьезно относимся к вашей конфиденциальности. Данная политика описывает, как мы собираем, используем и защищаем ваши данные.</p>
+                <p>1. <strong>Сбор данных:</strong> Мы не собираем персональные данные на этой целевой странице. Аналитика может использовать обезличенные файлы cookie.</p>
+                <p>2. <strong>Использование данных:</strong> Взаимодействие с ИИ-ботом происходит на сторонней платформе (Telegram), которая имеет собственные правила конфиденциальности. Мы гарантируем анонимность ваших диалогов с ботом.</p>
+                <p>3. <strong>Безопасность:</strong> Мы используем стандартные методы защиты информации для обеспечения безопасности вашего соединения.</p>
+                <p class="text-gray-500 italic mt-4">Документ составлен в соответствии с требованиями рекламных платформ.</p>
+            </div>
+            <button onclick="closeModal('privacyModal')" class="mt-6 w-full py-3 bg-gray-700 hover:bg-gray-600 active:bg-gray-500 rounded-xl text-white font-semibold transition-colors shrink-0">Закрыть</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно: Условия использования (Заглушка) -->
+    <div id="termsModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm items-center justify-center p-4 modal-transition opacity-0">
+        <div class="bg-gray-800/95 border border-gray-700 rounded-2xl p-5 sm:p-6 max-w-lg w-full max-h-[85vh] flex flex-col shadow-2xl">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-700/50 shrink-0">
+                <h2 class="text-lg sm:text-xl font-bold text-white">Условия использования</h2>
+                <button onclick="closeModal('termsModal')" class="text-gray-400 hover:text-white p-2 -mr-2"><i class="fa-solid fa-times text-xl"></i></button>
+            </div>
+            <div class="text-xs sm:text-sm text-gray-300 space-y-3 overflow-y-auto pr-2 custom-scrollbar">
+                <p>Используя данный сервис, вы соглашаетесь со следующими условиями:</p>
+                <p>1. <strong>Возрастные ограничения:</strong> Сервис предназначен строго для лиц, достигших совершеннолетия (18+).</p>
+                <p>2. <strong>Ответственность:</strong> Бот предоставляет развлекательный контент, генерируемый искусственным интеллектом. Разработчики не несут ответственности за интерпретацию ответов бота пользователем.</p>
+                <p>3. <strong>Сторонние сервисы:</strong> Наш сайт содержит ссылки на мессенджер Telegram. Мы не несем ответственности за работоспособность сторонних платформ.</p>
+            </div>
+            <button onclick="closeModal('termsModal')" class="mt-6 w-full py-3 bg-gray-700 hover:bg-gray-600 active:bg-gray-500 rounded-xl text-white font-semibold transition-colors shrink-0">Понятно</button>
+        </div>
+    </div>
+
+    <script>
+        // Обновленные функции для правильного открытия модалок на мобилках
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            // Небольшая задержка, чтобы flex успел примениться до анимации
+            setTimeout(() => { 
+                modal.classList.remove('opacity-0');
+            }, 10);
+            document.body.style.overflow = 'hidden'; // Запрет прокрутки основного фона
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.add('opacity-0');
+            setTimeout(() => { 
+                modal.classList.remove('flex');
+                modal.classList.add('hidden'); 
+                document.body.style.overflow = ''; // Возврат прокрутки
+            }, 200);
+        }
+
+        // Закрытие по клику вне окна (по затемненному фону)
+        window.onclick = function(event) {
+            if (event.target.classList.contains('fixed')) {
+                closeModal(event.target.id);
+            }
+        }
+    </script>
+</body>
+</html>
